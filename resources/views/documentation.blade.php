@@ -14,4 +14,6 @@
 
 	^ Edit Design of register.blade.php and layouts/app.blade.php
 
+	^ Edit Design of login.blade.php
+
 --}}

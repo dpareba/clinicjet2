@@ -1,20 +1,22 @@
 @extends('layouts.app')
-
+@section('title')
+    | Login
+@endsection
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
+                <div class="panel-heading">Login Here</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
+                    <form data-parsley-validate class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" event.preventDefault(); required autofocus data-parsley-required-message="*Your registered email is required!" placeholder="Enter Email Address">
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -28,7 +30,7 @@
                             <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <input id="password" type="password" class="form-control" name="password" required data-parsley-required-message="*Please enter your password!" placeholder="Enter Password">
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">
@@ -57,6 +59,8 @@
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     Forgot Your Password?
                                 </a>
+                                <br>
+                                Not registered yet? <a href="{{url('/register')}}"><b>REGISTER</b></a> now
                             </div>
                         </div>
                     </form>
