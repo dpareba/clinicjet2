@@ -6,6 +6,11 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Str; //Added
+use Illuminate\Http\Request; //Added
+use Illuminate\Auth\Events\Registered; //Added
+use Mail; //Added
+use App\Mail\ConfirmationEmail; //Added
 
 class RegisterController extends Controller
 {
@@ -27,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -63,9 +68,26 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'name' => Str::upper($data['name']),
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        Mail::to($user->email)->send(new ConfirmationEmail($user));
+
+        return redirect()->route('login')->withStatus('Please click on the activatation link we have sent to your e-mail id inorder to activate your account.');
+    }
+
+     public function confirmEmail($token){
+        User::whereToken($token)->firstOrFail()->hasVerified();
+
+        return redirect('login')->with('status','Your email is now verified, Please Login');
     }
 }

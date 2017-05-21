@@ -16,4 +16,65 @@
 
 	^ Edit Design of login.blade.php
 
+	^ For email verification post user registration
+		# Add 2 fields to users table migration
+		$table->boolean('verified')->default(false);
+        $table->string('token')->nullable();
+
+        # Redirect the user to login page post registration,
+        	protected $redirectTo = '/login';
+
+        # Edit RegisterController.php
+        	In create function of RegisterController, edit the following
+        	'name' => Str::upper($data['name']),
+
+        	From RegistersUsers traits of RegisterController, copy and edit the register function
+        	 public function register(Request $request)
+		    {
+		        $this->validator($request->all())->validate();
+
+		        event(new Registered($user = $this->create($request->all())));
+
+		        Mail::to($user->email)->send(new ConfirmationEmail($user));
+
+		        return redirect()->route('login')->withStatus('Please click on the activatation link we have sent to your e-mail id inorder to activate your account.');
+		    }
+
+	    # Create mail using php artisan make:mail ConfirmationEmail
+
+	    # Edit ConfirmationEmail.php
+				public function build()
+			    {
+			        return $this->view('emails.confirmation');
+			    }
+
+	    # Create view emails.confirmation.blade.php
+
+	    # Redirect users to the check route after login in LoginController.php
+	    		protected $redirectTo = '/check';
+
+		# In AuthenticatesUsers trait, update the credentials function
+			protected function credentials(Request $request)
+		    {
+		        return $request->only($this->username(), 'password') + ['verified'=>true];
+		    }
+
+	    # Inorder to generate token for user, boot the User model
+	    	public static function boot(){
+		        parent::boot();
+
+		        static::creating(function ($user){
+		            $user->token = str_random(40);
+		        });
+		    }
+
+	    # Add the following route in web.php inorder to confirm the token sent on email
+	    	Route::get('register/confirm/{token}','Auth\RegisterController@confirmEmail');
+
+		# In ResetPasswordController.php, redirect to login after resetting password
+				protected $redirectTo = '/login';
+
+		# In ResetsPasswords.php, remove the following in resetPassword function inorder to prevent users from logging in directly after a password reset
+				//$this->guard()->login($user);		
+
 --}}

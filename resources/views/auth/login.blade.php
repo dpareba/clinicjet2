@@ -9,6 +9,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Login Here</div>
                 <div class="panel-body">
+                    @include('partials.flash', ['some' => 'data'])
                     <form data-parsley-validate class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}
 
