@@ -10,6 +10,8 @@
 
 	^ Update the design of welcome.blade.php
 
-	^ update route of Home to @@<a class="link-doc" href="{{ url('check') }}">Home</a>@@ in welcome.blade.php 
+	^ update route of Home to @@<a class="link-doc" href="{{ url('check') }}">Home</a>@@ in welcome.blade.php
+
+	^ Edit Design of register.blade.php and layouts/app.blade.php
 
 --}}
