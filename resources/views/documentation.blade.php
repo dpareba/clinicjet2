@@ -77,4 +77,6 @@
 		# In ResetsPasswords.php, remove the following in resetPassword function inorder to prevent users from logging in directly after a password reset
 				//$this->guard()->login($user);		
 
+	^ Update the design of reset password views, namely auth/passwords/email.blade.php and auth/passwords/reset.blade.php			
+
 --}}
