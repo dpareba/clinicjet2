@@ -77,6 +77,24 @@
 		# In ResetsPasswords.php, remove the following in resetPassword function inorder to prevent users from logging in directly after a password reset
 				//$this->guard()->login($user);		
 
-	^ Update the design of reset password views, namely auth/passwords/email.blade.php and auth/passwords/reset.blade.php			
+	^ Update the design of reset password views, namely auth/passwords/email.blade.php and auth/passwords/reset.blade.php
+	
+	^ Set format of welcome and password reset mails
+		# edit config/mail.php: 'from' => [
+	        'address' => env('MAIL_FROM_ADDRESS', 'support@clinicjet.com'),
+	        'name' => env('MAIL_FROM_NAME', 'ClinicJet Support'),
+	    	]
+
+    	# run php artisan vendor:publish to publish views for email
+
+    	# in resources/views/vendor/notifications.email.blade.php, add 
+    			@if (! empty($salutation))
+				{{ $salutation }}
+				@else
+				Regards,<br>The {{ config('app.name') }} Team
+				@endif
+
+    ^ Add field for user avatar to User migration
+    	#  $table->string('avatar')->default('default.jpg');			
 
 --}}
