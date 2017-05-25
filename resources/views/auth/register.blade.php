@@ -40,6 +40,20 @@
                             </div>
                         </div>
 
+                         <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                            <label for="phone" class="col-md-4 control-label">Contact Number</label>
+
+                            <div class="col-md-6">
+                                <input id="phone" type="text"  data-parsley-pattern="(7|8|9)\d{9}" class="form-control" name="phone" value="{{ old('phone') }}" required="" data-parsley-required-message="*A valid phone is required to register" data-parsley-pattern-message="*Invalid Mobile Number" placeholder="Mobile Number">
+
+                                @if ($errors->has('phone'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('phone') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 

@@ -95,6 +95,10 @@
 				@endif
 
     ^ Add field for user avatar to User migration
-    	#  $table->string('avatar')->default('default.jpg');			
+    	#  $table->string('avatar')->default('default.jpg');
+
+	^ Create a Profile Model, migration and Profile Controller	
+
+	^ Add phone field to users table and register a new user with the same		
 
 --}}
