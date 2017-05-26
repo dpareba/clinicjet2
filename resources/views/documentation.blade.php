@@ -101,6 +101,6 @@
 
 	^ Add phone field to users table and register a new user with the same		
 
-	^ Create a Specialty Model and migration as well as database seeder
+	^ Create a Speciality Model and migration as well as database seeder
 
 --}}
