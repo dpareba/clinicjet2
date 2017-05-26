@@ -103,4 +103,6 @@
 
 	^ Create a Speciality Model and migration as well as database seeder
 
+	^ Register user speciality in RegisterController.php also add foreign key in users table by creating a new migration 
+
 --}}

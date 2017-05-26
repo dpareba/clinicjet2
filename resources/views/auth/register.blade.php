@@ -16,11 +16,29 @@
                             <label for="name" class="col-md-4 control-label">Name</label>
 
                             <div class="col-md-6">
-                            <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" event.preventDefault(); required autofocus style="text-transform: uppercase;" data-parsley-required-message="*Fullname Required" placeholder="Full Name">
+                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" event.preventDefault(); required autofocus style="text-transform: uppercase;" data-parsley-required-message="*Fullname Required" placeholder="Full Name">
 
                                 @if ($errors->has('name'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('name') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('speciality') ? ' has-error' : '' }}">
+                            <label for="speciality" class="col-md-4 control-label">Select Specialty</label>
+                            
+                            <div class="col-md-6">
+                                <select required="" data-parsley-required-message="*Kindly Select a Specialty" name="speciality" id="speciality" class="js-example-basic-single form-control">
+                                    @foreach ($specialities as $speciality)
+                                    <option value="{{$speciality->id}}" {{$speciality->speciality == 'GENERAL MEDICINE' ? 'selected="selected"' : ''}}>{{$speciality->speciality}}</option>
+                                    @endforeach
+                                </select>
+
+                                @if ($errors->has('speciality'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('speciality') }}</strong>
                                 </span>
                                 @endif
                             </div>
@@ -40,7 +58,7 @@
                             </div>
                         </div>
 
-                         <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
                             <label for="phone" class="col-md-4 control-label">Contact Number</label>
 
                             <div class="col-md-6">

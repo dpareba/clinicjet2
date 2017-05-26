@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','phone',
+        'name', 'email', 'password','phone','speciality_id',
     ];
 
     /**
@@ -40,5 +40,9 @@ class User extends Authenticatable
         $this->token = null;
 
         $this->save();
+    }
+
+    public function speciality(){
+        return $this->belongsTo('App\Speciality');
     }
 }

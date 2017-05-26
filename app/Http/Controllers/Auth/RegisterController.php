@@ -11,6 +11,7 @@ use Illuminate\Http\Request; //Added
 use Illuminate\Auth\Events\Registered; //Added
 use Mail; //Added
 use App\Mail\ConfirmationEmail; //Added
+use App\Speciality;//added
 
 class RegisterController extends Controller
 {
@@ -44,6 +45,12 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+     public function showRegistrationForm()
+    {
+        $specialities = Speciality::all();
+        return view('auth.register')->withSpecialities($specialities);
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -56,7 +63,8 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'phone' => 'required|min:10|max:10'
+            'phone' => 'required|min:10|max:10',
+            'speciality' => 'required'
         ]);
     }
 
@@ -72,7 +80,8 @@ class RegisterController extends Controller
             'name' => Str::upper($data['name']),
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'phone' => $data['phone']
+            'phone' => $data['phone'],
+            'speciality_id' => $data['speciality']
         ]);
     }
 
